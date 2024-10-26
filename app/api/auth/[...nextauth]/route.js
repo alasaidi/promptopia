@@ -12,13 +12,19 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      const sessionUser = await User.findOne({
-        email: session.user.email,
-      });
-      session.user.id = sessionUser._id.toString();
-      return session;
+      try {
+        await connectToDB();
+        const sessionUser = await User.findOne({
+          email: session.user.email,
+        });
+        session.user.id = sessionUser._id.toString();
+        return session;
+      } catch (err) {
+        console.log("Error in session callback: ", err.message);
+        return session;
+      }
     },
-    async signIn({ profile }) {
+    async signIn({ account, profile, user, credentials }) {
       try {
         await connectToDB();
 
@@ -30,14 +36,14 @@ const handler = NextAuth({
         //if not, create a new user
         if (!userExist) {
           await User.create({
-            name: profile.name.replace("", "").toLowerCase(),
             email: profile.email,
+            username: profile.name.replace(" ", "").toLowerCase(),
             image: profile.picture,
           });
         }
         return true;
       } catch (err) {
-        console.log(err);
+        console.log("Error checking if user exists: ", err.message);
         return false;
       }
     },
