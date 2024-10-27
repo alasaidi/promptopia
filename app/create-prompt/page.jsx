@@ -12,5 +12,5 @@ export default function CreatePrompt() {
   });
   const createPrompt = async (e) => {};
 
-  return <Form></Form>;
+  return <Form type="create" post={post} setPost={setPost} submitting={submitting} handleSubmit={createPrompt}></Form>;
 }
