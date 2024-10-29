@@ -5,9 +5,13 @@ import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
-  return <div className="mt-16 prompt_layout">{data.map((post) => {
-    <PromptCard key={post._id} post={post} handleTagClick={handleTagClick}
-  })}</div>;
+  return (
+    <div className="mt-16 prompt_layout">
+      {data.map((post) => (
+        <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
+      ))}
+    </div>
+  );
 };
 
 function Feed() {
@@ -29,7 +33,7 @@ function Feed() {
       <form className="relative w-full flex-center">
         <input type="text" placeholder="Search for a tag or a user name" value={searchText} onChange={handleSearchChange} required className="search_input peer" />
       </form>
-      <PromptCardList date={posts} handleTagClick={() => {}} />
+      <PromptCardList data={posts} handleTagClick={() => {}} />
     </section>
   );
 }
