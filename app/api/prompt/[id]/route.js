@@ -13,16 +13,18 @@ export const GET = async (req, { params }) => {
   }
 };
 //edit the Post
-export const PATCH = async (req, { params }) => {
-  const { prompt, tag } = await request.JSON();
+export const PATCH = async (request, { params }) => {
+  const { prompt, tag } = await request.json();
   try {
     await connectToDB();
     const existingPrompt = await Prompt.findById(params.id);
-    if (!existingPrompt) return new Response("prompt not found", { status: 404 });
+    if (!existingPrompt) {
+      return new Response("prompt not found", { status: 404 });
+    }
     existingPrompt.prompt = prompt;
     existingPrompt.tag = tag;
     await existingPrompt.save();
-    return new Response(JSON.stringify(existingPrompt), { status: 200 });
+    return new Response("Successfully updated the Prompts", { status: 200 });
   } catch (err) {
     return new Response("Failed to update Prompt", { status: 500 });
   }

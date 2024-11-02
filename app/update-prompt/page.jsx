@@ -26,28 +26,29 @@ const UpdatePrompt = () => {
     if (promptId) getPromptDetails();
   }, [promptId]);
 
-  // const createPrompt = async (e) => {
-  //   e.preventDefault();
-  //   setSubmitting(true);
-  //   try {
-  //     const response = await fetch("/api/prompt/new", {
-  //       method: "PATCH",
-  //       body: JSON.stringify({
-  //         prompt: post.prompt,
-  //         userId: session?.user.id,
-  //         tag: post.tag,
-  //       }),
-  //     });
-  //     if (response.ok) {
-  //       router.push("/");
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
+  const updatePrompt = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    if (!promptId) return alert("Prompt Id not Found");
 
-  return <Form type="Create" post={post} setPost={setPost} submitting={submitting} handleSubmit={() => {}}></Form>;
+    try {
+      const response = await fetch(`/api/prompt/${promptId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          prompt: post.prompt,
+          tag: post.tag,
+        }),
+      });
+      if (response.ok) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return <Form type="Update" post={post} setPost={setPost} submitting={submitting} handleSubmit={updatePrompt}></Form>;
 };
 export default UpdatePrompt;
