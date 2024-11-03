@@ -17,18 +17,26 @@ const PromptCardList = ({ data, handleTagClick }) => {
 function Feed() {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
-  const handleSearchChange = (e) => {};
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+    console.log(searchText);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch("/api/prompt");
       const data = await response.json();
-      setPosts(data);
+
       console.log(data);
+      if (data && searchText) {
+        const filteredItems = data.filter((posts) => posts.prompt.toLowerCase().includes(searchText.toLowerCase()));
+        if (filteredItems) setPosts(filteredItems);
+        else setPosts(data);
+      }
     };
 
     fetchPosts();
-  }, []);
+  }, [searchText]);
 
   return (
     <section className="feed">
