@@ -29,7 +29,8 @@ function Feed() {
 
       console.log(data);
       if (data && searchText) {
-        const filteredItems = data.filter((posts) => posts.prompt.toLowerCase().includes(searchText.toLowerCase()) || posts.tag.includes(searchText.toLowerCase()) || posts.creator.username.toLowerCase().includes(searchText.toLowerCase()));
+        const searchRegex = new RegExp(searchText.toLowerCase(), "i");
+        const filteredItems = data.filter((posts) => searchRegex.test(posts.prompt.toLowerCase()) || searchRegex.test(posts.tag) || searchRegex.test(posts.creator.username.toLowerCase()));
         setPosts(filteredItems);
       } else {
         setPosts(data);
