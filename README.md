@@ -1,4 +1,4 @@
-<img src="https://github.com/sujatagunale/EasyRead/assets/151519281/557837ce-f612-4530-ab24-189e75133c71" alt="Project Banner">
+<img src="https://raw.githubusercontent.com/alasaidi/promptopia/refs/heads/main/public/assets/images/promptopia.PNG" alt="Project Banner">
 
 
 ## 📋 <a name="table">Table of Contents</a>
